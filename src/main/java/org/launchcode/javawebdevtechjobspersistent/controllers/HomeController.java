@@ -48,7 +48,8 @@ public class HomeController {
             return "add";
         }
 
-        employerRepository.save(newJob.getEmployer());
+        employerRepository.findById(employerId);
+
         return "redirect:";
     }
 
