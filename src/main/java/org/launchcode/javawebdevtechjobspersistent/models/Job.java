@@ -6,7 +6,6 @@ import javax.persistence.*;
 public class Job extends AbstractEntity{
 
     @ManyToOne
-    @JoinColumn(name = "employerId")
     private Employer employer;
 
     private String skills;
