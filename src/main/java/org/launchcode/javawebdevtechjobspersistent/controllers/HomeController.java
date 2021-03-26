@@ -48,7 +48,9 @@ public class HomeController {
             return "add";
         }
 
-        employerRepository.findById(employerId);
+
+        Employer employer = employerRepository.findById(employerId).orElse(new Employer());
+        newJob.setEmployer(employer);
 
         return "redirect:";
     }
