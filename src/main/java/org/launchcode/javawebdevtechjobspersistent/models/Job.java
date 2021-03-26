@@ -6,7 +6,7 @@ import java.util.List;
 @Entity
 public class Job extends AbstractEntity{
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Employer employer;
 
     private String skills;
