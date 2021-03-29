@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by LaunchCode
@@ -44,7 +45,7 @@ public class HomeController {
 
     @PostMapping("add")
     public String processAddJobForm(@ModelAttribute @Valid Job newJob,
-                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam(required = false) List<Integer> skills) {
+                                    Errors errors, Model model, @RequestParam int employerId, @RequestParam List<Integer> skills) {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Job");
@@ -60,13 +61,22 @@ public class HomeController {
         return "redirect:";
     }
 
-    @GetMapping("view")
-    public String displayViewJob(Model model, @PathVariable(required = false) Integer jobId) {
+    @GetMapping("view/{jobId}")
+    public String displayViewJob(Model model, @PathVariable int jobId) {
 
-
-            model.addAttribute("title", "View Jobs");
-            model.addAttribute("jobs", jobRepository.findAll());
+        Optional jobObj = jobRepository.findById(jobId);
+        if (!jobObj.isEmpty()) {
+            Job job = (Job) jobObj.get();
+            model.addAttribute("job", job);
             return "view";
+        } else {
+            return "redirect:/";
+        }
+
+    /*
+            model.addAttribute("title", "View Jobs");
+            model.addAttribute("job", employerRepository.findById(jobId));
+            return "view"; */
 
     }
 

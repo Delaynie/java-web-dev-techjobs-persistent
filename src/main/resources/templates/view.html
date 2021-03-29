@@ -4,18 +4,19 @@
 
 <body class="container  body-content">
 
-<!--
 <h1  th:text="${'Job: ' + job.name}">View Jobs Default</h1>
--->
 
 <nav th:replace="fragments :: page-header"></nav>
-
-<li th:each="job : ${jobs}">
-    <a th:href="@{'/view/' + ${job.id}}" th:text="${job.name}"></a>
-</li>
-
 <!--
 <div class="job-listing">
+    <p th:text="${'ID: ' + job.id}"></p>
+    <p th:text="${'Name: ' + job.name}"></p>
+    <p th:text="${'Employer: ' + job.employer}"></p>
+    <p th:text="${'Skill: ' + job.skill}"></p>
+</div>
+-->
+<div class="job-listing">
+
     <p th:text="${'ID: ' + job.id}"></p>
     <p th:text="${'Name: ' + job.name}"></p>
     <p>
@@ -29,8 +30,6 @@
     </ul>
     </p>
 </div>
-
--->
 
 
 </body>
