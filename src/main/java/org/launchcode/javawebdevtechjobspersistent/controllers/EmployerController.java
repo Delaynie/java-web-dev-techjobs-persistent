@@ -1,6 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.controllers;
 
 import org.launchcode.javawebdevtechjobspersistent.models.Employer;
+import org.launchcode.javawebdevtechjobspersistent.models.Skill;
 import org.launchcode.javawebdevtechjobspersistent.models.data.EmployerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,13 +48,13 @@ public class EmployerController {
     @GetMapping("view/{employerId}")
     public String displayViewEmployer(Model model, @PathVariable int employerId) {
 
-        employerRepository.findById(employerId);
-        if (employerRepository.existsById(employerId)) {
-            Employer employer = (Employer) employerRepository;
-            model.addAttribute("employer", employerRepository.findById(employerId));
+        Optional employerObj = employerRepository.findById(employerId);
+        if (!employerObj.isEmpty()) {
+            Employer employer = (Employer) employerObj.get();
+            model.addAttribute("employer", employer);
             return "employers/view";
         } else {
-            return "redirect:../";
+            return "redirect:/";
         }
     }
 }
