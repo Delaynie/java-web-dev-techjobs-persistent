@@ -1,6 +1,7 @@
 package org.launchcode.javawebdevtechjobspersistent.controllers;
 
 import org.launchcode.javawebdevtechjobspersistent.models.Employer;
+import org.launchcode.javawebdevtechjobspersistent.models.Job;
 import org.launchcode.javawebdevtechjobspersistent.models.Skill;
 import org.launchcode.javawebdevtechjobspersistent.models.data.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @Controller
@@ -48,14 +50,15 @@ public class SkillController {
     @GetMapping("view/{skillId}")
     public String displayViewSkill(Model model, @PathVariable int skillId) {
 
-        skillRepository.findById(skillId);
-        if (skillRepository.existsById(skillId)) {
-            Skill skill = (Skill) skillRepository;
-            model.addAttribute("skill", skillRepository.findById(skillId));
+        Optional skillObj = skillRepository.findById(skillId);
+        if (!skillObj.isEmpty()) {
+            Skill skill = (Skill) skillObj.get();
+            model.addAttribute("skill", skill);
             return "skills/view";
         } else {
-            return "redirect:../";
+            return "redirect:/";
         }
+
     }
 
 }
